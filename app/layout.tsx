@@ -1,4 +1,9 @@
 import '@/app/ui/global.css';
+import { Lusitana } from 'next/font/google';
+const lusitana = Lusitana({
+  weight: '400',
+  subsets: ['latin'],
+});
 export default function RootLayout({
   children,
 }: {
@@ -6,7 +11,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <main className={lusitana.className}>{children}</main>
+      </body>
     </html>
   );
 }
