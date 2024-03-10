@@ -3,7 +3,7 @@ import { Lusitana } from 'next/font/google';
 import { inter } from '@/app/ui/fonts';
 
 const lusitana = Lusitana({
-  weight: '400',
+  weight: '700',
   subsets: ['latin'],
 });
 export default function RootLayout({
