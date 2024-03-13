@@ -1,5 +1,6 @@
 import React from 'react'; // Import React to define React components
 
+import CardWrapper from '@/app/ui/dashboard/cards';
 // Import necessary components and functions from specified paths
 import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChartComponent from '@/app/ui/dashboard/revenue-chart'; // Renamed the import to avoid conflict
@@ -12,7 +13,7 @@ import {
 } from '@/app/lib/data'; // Combined imports
 
 import { Suspense } from 'react';
-import { RevenueChartSkeleton } from '@/app/ui/skeletons';
+import { RevenueChartSkeleton, CardsSkeleton } from '@/app/ui/skeletons';
 
 // Define a React component function
 export default async function Page() {
@@ -48,6 +49,9 @@ export default async function Page() {
         <Suspense fallback={<RevenueChartSkeleton />}>
           <RevenueChartComponent revenue={revenue} />{' '}
           {/* Pass revenue data to the component */}
+        </Suspense>
+        <Suspense fallback={<CardsSkeleton />}>
+          <CardWrapper />
         </Suspense>
         <LatestInvoices latestInvoices={latestInvoices} />
       </div>
