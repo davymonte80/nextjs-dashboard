@@ -1,16 +1,23 @@
+import React from 'react'; // Import React to define React components
+
+// Import necessary components and functions from specified paths
 import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
+import { fetchRevenue } from '@/app/lib/data';
 
-import {
-  fetchRevenue,
-  fetchLatestInvoices,
-  fetchCardData,
-} from '@/app/lib/data';
+import { fetchLatestInvoices, fetchCardData } from '@/app/lib/data';
+import { Suspense } from 'react';
+import { RevenueChartSkeleton } from '@/app/ui/skeletons';
 
+
+export default async function RevenueChart() { // Make component async, remove the props
+  const revenue = await fetchRevenue(); // Fetch data inside the component
+
+// Define a React component function
 export default async function Page() {
-  const revenue = await fetchRevenue();
+  // Fetch latest invoices and card data asynchronously
   const latestInvoices = await fetchLatestInvoices();
   const {
     numberOfInvoices,
@@ -19,6 +26,7 @@ export default async function Page() {
     totalPendingInvoices,
   } = await fetchCardData();
 
+  // Return JSX representing the main content of the page
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
@@ -35,7 +43,9 @@ export default async function Page() {
         />
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <RevenueChart revenue={revenue} />
+        <Suspense fallback={<RevenueChartSkeleton />}>
+          <RevenueChart />
+        </Suspense>
         <LatestInvoices latestInvoices={latestInvoices} />
       </div>
     </main>
